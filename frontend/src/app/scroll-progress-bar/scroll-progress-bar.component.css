@@ -8,6 +8,6 @@
 }
 
 .progress-bar {
-  height: 5px;
-  background: linear-gradient(to right, #16b563, #ffe600, rgb(255, 70, 252));
+  height: 4px;
+  background: linear-gradient(to right, #16b563, #ffe600, rgb(185, 9, 147));
 }

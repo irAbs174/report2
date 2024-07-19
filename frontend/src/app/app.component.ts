@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ScrollProgressBarComponent } from './scroll-progress-bar/scroll-progress-bar.component';
+import { LoadingService } from './loading.service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,8 @@ import { ScrollProgressBarComponent } from './scroll-progress-bar/scroll-progres
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+
+  constructor(private loadingService: LoadingService) {};
 
   showVerification = false;
 
@@ -21,5 +24,10 @@ export class AppComponent {
 
   send_data() {
     this.showVerification = true;
+    this.loadingService.simulateLoading();
+  }
+
+  ngOnInit(){
+    this.loadingService.simulateLoading();
   }
 }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoadingService } from '../loading.service';
 
 @Component({
   selector: 'app-scroll-progress-bar',
@@ -9,20 +10,11 @@ import { Component, OnInit } from '@angular/core';
 export class ScrollProgressBarComponent implements OnInit {
   scrollPercentage: number = 0; // Initialize to 0
 
-  constructor() {}
+  constructor(private loadingService: LoadingService) {}
 
   ngOnInit() {
-    this.simulateLoading();
-  }
-
-  simulateLoading() {
-    let progress = 0;
-    const interval = setInterval(() => {
-      progress += 3;
+    this.loadingService.loadingProgress$.subscribe(progress => {
       this.scrollPercentage = progress;
-      if (progress >= 100) {
-        clearInterval(interval);
-      }
-    }, 100); // Adjust the interval duration as needed
+    })
   }
 }

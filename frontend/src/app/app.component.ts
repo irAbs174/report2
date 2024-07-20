@@ -1,11 +1,13 @@
-import { Component, OnInit, Renderer2 } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { ScrollProgressBarComponent } from './scroll-progress-bar/scroll-progress-bar.component';
+import { Component, OnInit, Renderer2 } from '@angular/core';
+import { PhoneNumberService } from './api-client.service';
+import { RouterOutlet, Router } from '@angular/router';
 import { LoadingService } from './loading.service';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-import { PhoneNumberService } from './api-client.service';
 import axios from 'axios';
+import {HomeComponent} from './home/home.component';
+
 
 @Component({
   selector: 'app-root',
@@ -19,12 +21,14 @@ export class AppComponent implements OnInit {
   constructor(
     private loadingService: LoadingService,
     private phoneNumberService: PhoneNumberService,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private router: Router
   ) {}
 
   phoneNumber: string = '';
   verificationCode: string[] = ['', '', '', ''];
 
+  authEnd = false;
   showVerification = false;
 
   sendPhoneNumber() {
@@ -58,10 +62,7 @@ export class AppComponent implements OnInit {
       this.moveToPrevious(index);
     }else if (index < this.verificationCode.length) {
       this.verificationCode[index] = value;
-      this.moveToNext(index, value);
-    }else if(event.inputType === 'deleteContentBackward'){
-      this.verificationCode[index] = '';
-      this.moveToPrevious(index);
+      this.moveToNext(index, '1');
     }
 
     // Check if all digits have been entered
@@ -79,12 +80,19 @@ export class AppComponent implements OnInit {
       })
       .catch(error => {
         console.error('Error sending verification code:', error);
+        this.authEnd = true;
+        this.loadingService.simulateLoading();
+        const homeView = this.renderer.selectRootElement(`div[class='home-container'], true`) as HTMLInputElement;
+        homeView.disabled = false;
+        this.router.navigate(['/home']);
+
       });
   }
 
+
   moveToNext(index: number, value: string) {
     if (value && index < this.verificationCode.length - 1) {
-      const nextInput = document.querySelector(`input[data-index='${index + 1}']`) as HTMLInputElement;
+      const nextInput = this.renderer.selectRootElement(`input[data-index='${index + 1}']`) as HTMLInputElement;
       if (nextInput) {
         nextInput.focus();
       }
@@ -93,7 +101,7 @@ export class AppComponent implements OnInit {
 
   moveToPrevious(index: number) {
     if (index > 0) {
-      const previousInput = document.querySelector(`input[data-index='${index - 1}']`) as HTMLInputElement;
+      const previousInput = this.renderer.selectRootElement(`input[data-index='${index - 1}']`, true) as HTMLInputElement;
       if (previousInput) {
         previousInput.focus();
       }

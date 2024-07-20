@@ -1,7 +1,6 @@
 <main>
-  <div class="login-container">
-    <app-scroll-progress-bar></app-scroll-progress-bar>
-    <router-outlet></router-outlet>
+  <app-scroll-progress-bar></app-scroll-progress-bar>
+  <div class="login-container" [class.hidden]="authEnd">
     <div class="login-box" [class.hidden]="showVerification">
       <img src="https://123kif.com/wp-content/uploads/2020/07/123-logo-1.webp" alt="Sash Logo" class="logo">
       <h2>سامانه رهگیری سفارشات</h2>

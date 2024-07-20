@@ -2,21 +2,27 @@ import { ScrollProgressBarComponent } from './scroll-progress-bar/scroll-progres
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { PhoneNumberService } from './api-client.service';
 import { RouterOutlet, Router } from '@angular/router';
+import {HomeComponent} from './home/home.component';
 import { LoadingService } from './loading.service';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import axios from 'axios';
-import {HomeComponent} from './home/home.component';
-
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ScrollProgressBarComponent, FormsModule],
+  imports: [RouterOutlet, ScrollProgressBarComponent, FormsModule, HomeComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+
+  enterNumber = false;
+  VerificationDigits = true;
+  home = true;
+
+  phoneNumber: string = '';
+  verificationCode: string[] = ['', '', '', ''];
 
   constructor(
     private loadingService: LoadingService,
@@ -25,19 +31,13 @@ export class AppComponent implements OnInit {
     private router: Router
   ) {}
 
-  phoneNumber: string = '';
-  verificationCode: string[] = ['', '', '', ''];
-
-  authEnd = false;
-  showVerification = false;
-
   sendPhoneNumber() {
     this.loadingService.simulateLoading();
     const formattedPhoneNumbers = this.formatPhoneNumber(this.phoneNumber);
     this.phoneNumberService.sendPhoneNumbers(formattedPhoneNumbers)
       .then(() => {
         console.log('Phone numbers sent successfully');
-        this.showVerification = true; // Show verification box after sending phone numbers
+        this.VerificationDigits = false; // Show verification box after sending phone numbers
       })
       .catch((error) => {
         console.error('Error sending phone numbers:', error);
@@ -67,9 +67,7 @@ export class AppComponent implements OnInit {
 
     // Check if all digits have been entered
     if (this.verificationCode.every(digit => digit !== '')) {
-      this.renderer.setProperty(submitButton, 'disabled', false);
       this.verifyCode(this.verificationCode);
-      this.loadingService.simulateLoading();
     }
   }
 
@@ -79,13 +77,12 @@ export class AppComponent implements OnInit {
         console.log('Verification code sent successfully!');
       })
       .catch(error => {
-        console.error('Error sending verification code:', error);
-        this.authEnd = true;
-        this.loadingService.simulateLoading();
-        const homeView = this.renderer.selectRootElement(`div[class='home-container'], true`) as HTMLInputElement;
-        homeView.disabled = false;
+        this.VerificationDigits = false;
+        this.enterNumber = false;
         this.router.navigate(['/home']);
-
+        this.home = true;
+        this.loadingService.simulateLoading();
+        console.error('Error sending verification code:', error);
       });
   }
 

@@ -98,7 +98,6 @@ form {
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 1rem;
-  direction: rtl;
   text-align: center;
 }
 
@@ -110,7 +109,6 @@ form {
   text-align: center;
   border: 1px solid #ccc;
   border-radius: 4px;
-  direction: rtl;
 }
 
 .otp-input:focus {

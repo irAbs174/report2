@@ -1,11 +1,12 @@
 import { ScrollProgressBarComponent } from './scroll-progress-bar/scroll-progress-bar.component';
+import { NgModule, ViewChild, ViewContainerRef } from '@angular/core';
+import { DynamicComponentService } from './dynamic-component.service';
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { PhoneNumberService } from './api-client.service';
 import { RouterOutlet, Router } from '@angular/router';
-import {HomeComponent} from './home/home.component';
+import { HomeComponent } from './home/home.component';
 import { LoadingService } from './loading.service';
 import { FormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
 import axios from 'axios';
 
 @Component({
@@ -17,19 +18,27 @@ import axios from 'axios';
 })
 export class AppComponent implements OnInit {
 
-  enterNumber = false;
-  VerificationDigits = true;
-  home = true;
+  enterNumber = true;
+  VerificationDigits = false;
+  home = false;
 
   phoneNumber: string = '';
   verificationCode: string[] = ['', '', '', ''];
+
+  @ViewChild('dynamicComponentContainer', { read: ViewContainerRef, static: true })
+  dynamicComponentContainer!: ViewContainerRef;
 
   constructor(
     private loadingService: LoadingService,
     private phoneNumberService: PhoneNumberService,
     private renderer: Renderer2,
-    private router: Router
+    private router: Router,
+    private dynamicComponentService: DynamicComponentService,
   ) {}
+
+  loadComponent(component: any) {
+    this.dynamicComponentService.loadComponent(this.dynamicComponentContainer, component);
+  }
 
   sendPhoneNumber() {
     this.loadingService.simulateLoading();
@@ -37,7 +46,7 @@ export class AppComponent implements OnInit {
     this.phoneNumberService.sendPhoneNumbers(formattedPhoneNumbers)
       .then(() => {
         console.log('Phone numbers sent successfully');
-        this.VerificationDigits = false; // Show verification box after sending phone numbers
+        this.VerificationDigits = true;
       })
       .catch((error) => {
         console.error('Error sending phone numbers:', error);
@@ -60,7 +69,7 @@ export class AppComponent implements OnInit {
     if (event.inputType === 'deleteContentBackward') {
       this.verificationCode[index] = '';
       this.moveToPrevious(index);
-    }else if (index < this.verificationCode.length) {
+    } else if (index < this.verificationCode.length) {
       this.verificationCode[index] = value;
       this.moveToNext(index, '1');
     }
@@ -77,15 +86,13 @@ export class AppComponent implements OnInit {
         console.log('Verification code sent successfully!');
       })
       .catch(error => {
-        this.VerificationDigits = false;
-        this.enterNumber = false;
-        this.router.navigate(['/home']);
-        this.home = true;
-        this.loadingService.simulateLoading();
         console.error('Error sending verification code:', error);
+        this.loadingService.simulateLoading();
+        this.enterNumber = false;
+        this.VerificationDigits = false;
+        this.loadComponent(HomeComponent)
       });
   }
-
 
   moveToNext(index: number, value: string) {
     if (value && index < this.verificationCode.length - 1) {

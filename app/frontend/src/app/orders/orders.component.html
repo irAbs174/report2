@@ -1,0 +1,26 @@
+<div #dynamicComponentContainer></div>
+<!-- orders.component.html -->
+<div class="orders-container" [hidden]="orders_show">
+  <img src="https://123kif.com/wp-content/uploads/2020/07/123-logo-1.webp" alt="123kif logo" class="logo123">
+  <h2>تاریخچه سفارشات شما</h2>
+  <table class="orders-table">
+    <thead>
+      <tr>
+        <th>وضعیت سفارش</th>
+        <th>تاریخ ثبت</th>
+        <th>مجموع فاکتور</th>
+        <th>شناسه سفارش</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <td>
+          <button type="button" (click)="viewOrderDetails(order); $event.stopPropagation()">مشاهده رهگیری</button>
+        </td>
+        <td>{{ order.date | date:'shortDate' }}</td>
+        <td>{{ order.totalPayment | currency }}</td>
+        <td>{{ order.id }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

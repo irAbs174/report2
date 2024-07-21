@@ -46,6 +46,7 @@ class Create(View):
                 user_accounts.objects.filter(phoneNumber=phone_number
                                      ).update(WPOPass=four_digit_code)
             try:
+                print(four_digit_code)
                 api = KavenegarAPI(f'{SMS_API_KEY}')
                 params = {
                     'receptor': phone_number,

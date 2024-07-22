@@ -1,160 +1,11 @@
-.hidden {
-  opacity: 0;
-  transform: scale(0.9);
-  pointer-events: none;
-}
+@import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
 
-.logo123 {
-  width: 255px;
-  margin: 2px;
-  animation: brandAnimation 5s infinite;
-}
-
-@keyframes brandAnimation {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-    filter: hue-rotate(0deg);
-  }
-  25% {
-    transform: scale(1.1);
-    opacity: 0.8;
-    filter: hue-rotate(90deg);
-  }
-  50% {
-    transform: scale(1);
-    opacity: 1;
-    filter: hue-rotate(180deg);
-  }
-  75% {
-    transform: scale(1.1);
-    opacity: 0.8;
-    filter: hue-rotate(270deg);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-    filter: hue-rotate(360deg);
-  }
-}
-
-.orders-container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 20px auto;
-  background-color: #ffffff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  text-align: center;
-}
-
-.orders-container h2 {
-  margin-bottom: 20px;
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.orders-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-}
-
-.orders-table th,
-.orders-table td {
-  padding: 16px;
-  border: 1px solid #92ccff;
-  text-align: left;
-}
-
-.orders-table th {
-  background-color: #92a2ff;
-  color: #555;
-}
-
-.orders-table tr {
-  transition: background-color 0.3s ease;
-}
-
-.orders-table tr:hover {
-  background-color: #f1f1f1;
-}
-
-.orders-table tr td button {
-  background-color: #71b6ff;
-  color: white;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.orders-table tr td button:hover {
-  background-color: #4380c1;
-}
-
-.order-details {
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #f6d6ff;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-.order-details h2 {
-  margin-bottom: 10px;
-  font-size: 1.25rem;.home-box{
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  max-width: 400px;
-  width: 100%;
+body {
   font-family: 'Vazir', sans-serif;
-  transition: opacity 0.6s ease, transform 0.6s ease;
-}
-
-.hidden {
-  opacity: 0;
-  transform: scale(0.9);
-  pointer-events: none;
-}
-
-.logo123 {
-  width: 255px;
-  margin: 2px;
-  animation: brandAnimation 5s infinite;
-}
-
-@keyframes brandAnimation {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-    filter: hue-rotate(0deg);
-  }
-  25% {
-    transform: scale(1.1);
-    opacity: 0.8;
-    filter: hue-rotate(90deg);
-  }
-  50% {
-    transform: scale(1);
-    opacity: 1;
-    filter: hue-rotate(180deg);
-  }
-  75% {
-    transform: scale(1.1);
-    opacity: 0.8;
-    filter: hue-rotate(270deg);
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-    filter: hue-rotate(360deg);
-  }
+  direction: rtl;
+  background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
 }
 
 .orders-container {
@@ -168,10 +19,68 @@
   text-align: center;
 }
 
-.orders-container h2 {
+.back-button {
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  font-size: 1rem;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #0056b3;
+}
+
+.logo123 {
+  width: 200px;
+  margin: 20px auto;
+  display: block;
+  animation: brandAnimation 5s infinite;
+}
+
+@keyframes brandAnimation {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  25%, 75% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.user-info-container,
+.order-summary-container,
+.order-status-container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.user-info-card,
+.order-card {
+  width: 100%;
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+}
+
+.user-info-display h3 {
   margin-bottom: 20px;
   font-size: 1.5rem;
   color: #333;
+}
+
+.user-info-display p {
+  margin: 10px 0;
+  color: #555;
 }
 
 .orders-table {
@@ -182,14 +91,14 @@
 
 .orders-table th,
 .orders-table td {
-  padding: 16px;
-  border: 1px solid #92ccff;
-  text-align: left;
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: right;
 }
 
 .orders-table th {
   background-color: #92a2ff;
-  color: #555;
+  color: white;
 }
 
 .orders-table tr {
@@ -197,11 +106,11 @@
 }
 
 .orders-table tr:hover {
-  background-color: #f1f1f1;
+  background-color: #f9f9f9;
 }
 
 .orders-table tr td button {
-  background-color: #71b6ff;
+  background-color: #007bff;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -211,20 +120,21 @@
 }
 
 .orders-table tr td button:hover {
-  background-color: #4380c1;
+  background-color: #0056b3;
 }
 
 .order-details {
   margin-top: 20px;
   padding: 20px;
-  background-color: #f6d6ff;
+  background-color: #fafafa;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .order-details h2 {
   margin-bottom: 10px;
   font-size: 1.25rem;
+  color: #333;
 }
 
 .order-details p {
@@ -232,21 +142,60 @@
   color: #666;
 }
 
-h2 {
+h5 {
   font-size: 1.5rem;
-  margin: 2rem;
+  margin-bottom: 20px;
   color: #333;
 }
 
+@media (max-width: 600px) {
+  .order-card {
+    margin: 10px;
+  }
+  .user-info-display p {
+    font-size: 0.9rem;
+  }
+  .orders-table th,
+  .orders-table td {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+  .orders-table th {
+    font-size: 1rem;
+  }
 }
 
-.order-details p {
-  margin: 0;
-  color: #666;
+.flat-btn {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff; /* Text color */
+  background-color: #007BFF; /* Background color */
+  border: none; /* No border */
+  border-radius: 4px; /* Rounded corners */
+  text-align: center;
+  text-decoration: none; /* No underline */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transition for hover effects */
 }
 
-h2 {
-  font-size: 1.5rem;
-  margin: 2rem;
-  color: #333;
+/* Hover effect for the flat button */
+.flat-btn:hover {
+  background-color: #0056b3; /* Darker background color on hover */
+}
+
+/* Active effect for the flat button */
+.flat-btn:active {
+  background-color: #004494; /* Even darker background color when pressed */
+  transform: scale(0.98); /* Slightly shrink button to indicate active state */
+}
+
+/* Disabled state for the flat button */
+.flat-btn:disabled {
+  background-color: #cccccc; /* Gray background for disabled button */
+  color: #666666; /* Gray text for disabled button */
+  cursor: not-allowed; /* Not-allowed cursor for disabled button */
 }
